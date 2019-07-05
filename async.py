@@ -71,8 +71,9 @@ def test_resampling():
     plt.scatter(times, irreg_data, color='r')
     plt.show()
 
-def fit(data, times, p=2):
-    fit_res = 10
+def fit(data, times, p=2, fit_res=None):
+    if fit_res is None:
+        fit_res = p * 2
     width = p / fit_res
     A, b, times_red = get_system_matrix(times, data, fit_res, width)
     theta = np.linalg.lstsq(A, b, rcond=-1)
@@ -89,10 +90,11 @@ def test_fit():
     print("AR({}), {} samples".format(p, N))
     times = np.linspace(0, N, N)
 
+    fit_res = 10
     for std_horizontal in np.linspace(0, 1):
         data, times = resample(orig_data, std_horizontal=std_horizontal)
 
-        theta, A, b, times_red = fit(data, times, p)
+        theta, A, b, times_red = fit(data, times, p, fit_res)
         y_rec = np.dot(A, theta)
 
         err = rmse(b, y_rec)
