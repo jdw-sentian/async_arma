@@ -108,7 +108,7 @@ def aligned_trapezoid_conv(y0, y1):
     y00, y01 = y0
     y10, y11 = y1
 
-    # don't know if shoulkd be / 6 or /3
+    # don't know if should be / 6 or /3
     return (y00*y10 + y01*y11 + (y00 + y01)*(y10 + y11)) / 3
     
 def intersection(c0, c1):

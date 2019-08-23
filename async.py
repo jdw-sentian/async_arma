@@ -23,6 +23,8 @@ def get_ts(N, p=0, q=0):
     """
     p is the number of poles
     q is the number of nills
+
+    Generates stable processes.
     """
 
     model = ArmaProcess(poles(p // 2), poles(q // 2))
@@ -98,21 +100,19 @@ def test_fit():
         y_rec = np.dot(A, theta)
 
         err = rmse(b, y_rec)
-        print("RMSE: {0:.3f}".format(err))
+        info = "Horz std: {0:.2f}, RMSE: {1:.3f}".format(std_horizontal, err)
+        print(info)
         burn_in = len(data) - len(y_rec)
         residuals = b - y_rec
 
         plt.cla()
         plt.hist(residuals, bins=50)
         plt.xlim([-10, 10])
-        plt.title("Horz std: {0:.2f}, RMSE: {1:.3f}".format(std_horizontal, err))
+        plt.title(info)
         plt.draw()
         plt.pause(0.5)
-    #plt.show()
 
     # signal to noise ratio
-
-
 
     plt.plot(times, data, 'b')
     plt.scatter(times, data, color='b')
